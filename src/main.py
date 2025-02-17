@@ -10,7 +10,7 @@ import urllib.parse
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("News Scrapper Steve Minder")
+        self.setWindowTitle("News Scraper Steve Minder")
         self.resize(800, 700)
 
         layout = QVBoxLayout()
