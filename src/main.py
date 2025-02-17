@@ -118,7 +118,7 @@ class MyWindow(QWidget):
         kicker_label.setStyleSheet("font-size: 12px; color: #7f8c8d;")
 
         if article_url:
-            link_label = QLabel(f"<a href='{article_url}' style='color:#00008B; text-decoration:underline; text-decoration-style:wavy;'>➡️ Zum Artikel</a>")
+            link_label = QLabel(f"<a href='{article_url}' style='color:#00008B; text-decoration:underline; text-decoration-style:wavy;'>➡️ Weiterlesen</a>")
             link_label.setOpenExternalLinks(True)
             card_layout.addWidget(link_label)
 
