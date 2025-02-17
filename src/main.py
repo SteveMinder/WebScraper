@@ -11,7 +11,7 @@ class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("News Scrapper Steve Minder")
-        self.resize(800, 600)
+        self.resize(800, 700)
 
         layout = QVBoxLayout()
         self.tabs = QTabWidget()
