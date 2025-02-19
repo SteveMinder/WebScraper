@@ -1,5 +1,6 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton, QFrame, QGridLayout, QTabWidget
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton, QFrame, QGridLayout, \
+    QTabWidget
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 import scrapper
@@ -7,13 +8,33 @@ import requests
 from io import BytesIO
 import urllib.parse
 
+
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("News Scraper Steve Minder")
-        self.resize(800, 700)
+        self.resize(1000, 700)
+
+        # Überschrift hinzufügen
+        header_label = QLabel("📰 Aktuelle News auf einen Blick")
+        header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        header_label.setStyleSheet("""
+            font-size: 22px;
+            font-weight: bold;
+            color: #00a8e8;
+            padding: 5px;
+        """)
+
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #121212;
+                color: #e0e0e0;
+                font-family: 'Arial';
+            }
+        """)
 
         layout = QVBoxLayout()
+        layout.addWidget(header_label)
         self.tabs = QTabWidget()
         self.bern_tab = QWidget()
         self.nau_tab = QWidget()
@@ -23,25 +44,35 @@ class MyWindow(QWidget):
         layout.addWidget(self.tabs)
         self.setLayout(layout)
 
-        self.create_news_tab(self.bern_tab, "Bern Ost", "https://www.bern-ost.ch/", "span", "content-box-kicker", "h2", "content-box-title", "img", "img-fluid", "a", "content-box")
-        self.create_news_tab(self.nau_tab, "Nau", "https://www.nau.ch/news", "span", "block", "span", "py-1", "img", "object-cover", "a", "text-black")
+        self.create_news_tab(self.bern_tab, "Bern Ost", "https://www.bern-ost.ch/", "span", "content-box-kicker", "h2",
+                             "content-box-title", "img", "img-fluid", "a", "content-box")
+        self.create_news_tab(self.nau_tab, "Nau", "https://www.nau.ch/news", "span", "block", "span", "py-1", "img",
+                             "object-cover", "a", "text-black")
 
-    def create_news_tab(self, tab, name, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag, link_class):
+    def create_news_tab(self, tab, name, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class,
+                        link_tag, link_class):
         layout = QVBoxLayout(tab)
         update_button = QPushButton(f"{name} News aktualisieren")
         update_button.setStyleSheet("""
-                   QPushButton {
-                       background-color: #004a99;
-                       color: white;
-                       padding: 6px;
-                       border-radius: 5px;
-                       transition: background-color 0.2s;
-                   }
-                   QPushButton:pressed {
-                       background-color: #003377;
-                   }
-               """)
-        update_button.clicked.connect(lambda: self.load_news(tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag, link_class))
+            QPushButton {
+                background-color: #00a8e8;
+                color: white;
+                padding: 10px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            }
+            QPushButton:hover {
+                background-color: #0088cc;
+            }
+            QPushButton:pressed {
+                background-color: #0077aa;
+            }
+        """)
+        update_button.clicked.connect(
+            lambda: self.load_news(tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class,
+                                   link_tag, link_class))
         layout.addWidget(update_button)
 
         scroll_area = QScrollArea()
@@ -53,15 +84,18 @@ class MyWindow(QWidget):
         layout.addWidget(scroll_area)
 
         tab.grid_layout = grid_layout
-        self.load_news(tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag, link_class)
+        self.load_news(tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag,
+                       link_class)
 
-    def load_news(self, tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag, link_class):
+    def load_news(self, tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag,
+                  link_class):
         for i in reversed(range(tab.grid_layout.count())):
             widget = tab.grid_layout.itemAt(i).widget()
             if widget:
                 widget.deleteLater()
 
-        news = scrapper.scrape_kicker_title_image(url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag, link_class)
+        news = scrapper.scrape_kicker_title_image(url, kicker_tag, kicker_class, title_tag, title_class, img_tag,
+                                                  img_class, link_tag, link_class)
 
         if not news:
             label = QLabel("ℹ️ Keine News gefunden.")
@@ -79,10 +113,10 @@ class MyWindow(QWidget):
     def create_news_card(self, title, kicker, image_url, article_url=None):
         card = QFrame()
         card.setStyleSheet("""
-            background-color: #d0d0d0;
-            border-radius: 8px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
             padding: 6px;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
         """)
         card_layout = QVBoxLayout()
 
@@ -90,9 +124,9 @@ class MyWindow(QWidget):
         image_label.setFixedSize(200, 130)
         image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         image_label.setStyleSheet("""
-            border: 1px solid #00008B;
-            border-radius: 6px;
-            background-color: #f0f0f0;
+            border-radius: 8px;
+            background-color: #2c2c2c;
+            padding: 5px;
         """)
 
         try:
@@ -111,14 +145,15 @@ class MyWindow(QWidget):
             image_label.setText("Bild konnte nicht geladen werden")
 
         title_label = QLabel(f"<b>🗞️ {title}</b>")
-        title_label.setWordWrap(True)  # Automatischer Zeilenumbruch
+        title_label.setWordWrap(True)
         title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        title_label.setStyleSheet("font-size: 14px; color: #2c3e50; line-height: 1.4;")
+        title_label.setStyleSheet("font-size: 15px; font-weight: bold; color: #a0afbd;")
         kicker_label = QLabel(f"📌 {kicker}")
-        kicker_label.setStyleSheet("font-size: 12px; color: #7f8c8d;")
+        kicker_label.setStyleSheet("font-size: 13px; color: #b0b0b0;")
 
         if article_url:
-            link_label = QLabel(f"<a href='{article_url}' style='color:#00008B; text-decoration:underline; text-decoration-style:wavy;'>➡️ Weiterlesen</a>")
+            link_label = QLabel(
+                f"<a href='{article_url}' style='color:#00a8e8; text-decoration:underline;'>➡️ Weiterlesen</a>")
             link_label.setOpenExternalLinks(True)
             card_layout.addWidget(link_label)
 
@@ -127,6 +162,7 @@ class MyWindow(QWidget):
         card_layout.addWidget(kicker_label)
         card.setLayout(card_layout)
         return card
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
