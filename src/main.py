@@ -7,6 +7,8 @@ import scrapper
 import requests
 from io import BytesIO
 import urllib.parse
+import style
+
 
 
 class MyWindow(QWidget):
@@ -15,26 +17,16 @@ class MyWindow(QWidget):
         self.setWindowTitle("News Scraper Steve Minder")
         self.resize(1000, 700)
 
+        self.setStyleSheet(style.MAIN_WINDOW_STYLE)
+
+        layout = QVBoxLayout()
+
         # Überschrift hinzufügen
         header_label = QLabel("📰 Aktuelle News auf einen Blick")
         header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        header_label.setStyleSheet("""
-            font-size: 22px;
-            font-weight: bold;
-            color: #00a8e8;
-            padding: 5px;
-        """)
-
-        self.setStyleSheet("""
-            QWidget {
-                background-color: #121212;
-                color: #e0e0e0;
-                font-family: 'Arial';
-            }
-        """)
-
-        layout = QVBoxLayout()
+        header_label.setStyleSheet(style.MAIN_WINDOW_STYLE)
         layout.addWidget(header_label)
+
         self.tabs = QTabWidget()
         self.bern_tab = QWidget()
         self.nau_tab = QWidget()
@@ -53,23 +45,8 @@ class MyWindow(QWidget):
                         link_tag, link_class):
         layout = QVBoxLayout(tab)
         update_button = QPushButton(f"{name} News aktualisieren")
-        update_button.setStyleSheet("""
-            QPushButton {
-                background-color: #00a8e8;
-                color: white;
-                padding: 10px;
-                border-radius: 6px;
-                font-size: 14px;
-                font-weight: bold;
-                transition: background-color 0.3s;
-            }
-            QPushButton:hover {
-                background-color: #0088cc;
-            }
-            QPushButton:pressed {
-                background-color: #0077aa;
-            }
-        """)
+        update_button.setStyleSheet(style.BUTTON_STYLE)
+
         update_button.clicked.connect(
             lambda: self.load_news(tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class,
                                    link_tag, link_class))
@@ -112,22 +89,13 @@ class MyWindow(QWidget):
 
     def create_news_card(self, title, kicker, image_url, article_url=None):
         card = QFrame()
-        card.setStyleSheet("""
-            background-color: #1e1e1e;
-            border-radius: 12px;
-            padding: 6px;
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
-        """)
+        card.setStyleSheet(style.CARD_STYLE)
         card_layout = QVBoxLayout()
 
         image_label = QLabel()
         image_label.setFixedSize(200, 130)
         image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        image_label.setStyleSheet("""
-            border-radius: 8px;
-            background-color: #2c2c2c;
-            padding: 5px;
-        """)
+        image_label.setStyleSheet(style.IMAGE_STYLE)
 
         try:
             response = requests.get(image_url, timeout=5)
@@ -147,9 +115,9 @@ class MyWindow(QWidget):
         title_label = QLabel(f"<b>🗞️ {title}</b>")
         title_label.setWordWrap(True)
         title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        title_label.setStyleSheet("font-size: 15px; font-weight: bold; color: #a0afbd;")
+        title_label.setStyleSheet(style.TITLE_STYLE)
         kicker_label = QLabel(f"📌 {kicker}")
-        kicker_label.setStyleSheet("font-size: 13px; color: #b0b0b0;")
+        kicker_label.setStyleSheet(style.KICKER_STYLE)
 
         if article_url:
             link_label = QLabel(
