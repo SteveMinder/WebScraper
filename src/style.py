@@ -50,7 +50,6 @@ IMAGE_STYLE = """
     background-color: #2c2c2c;
     padding: 5px;
 """
-
 # Style für Titel in News-Karten
 TITLE_STYLE = "font-size: 15px; font-weight: bold; color: #a0afbd;"
 

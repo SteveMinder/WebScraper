@@ -9,37 +9,47 @@ from io import BytesIO
 import urllib.parse
 import style
 
-
-
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.setup_window()
+        self.setup_layout()
+        self.setup_tabs()
+
+    def setup_window(self):
+        """Setzt grundlegende Eigenschaften des Fensters."""
         self.setWindowTitle("News Scraper Steve Minder")
         self.resize(1000, 700)
-
         self.setStyleSheet(style.MAIN_WINDOW_STYLE)
 
-        layout = QVBoxLayout()
+    def setup_layout(self):
+        """Initialisiert das Hauptlayout."""
+        self.layout = QVBoxLayout(self)
+        self.layout.addWidget(self.create_header())
 
-        # Überschrift hinzufügen
+    def setup_tabs(self):
+        """Erstellt die Tabs dynamisch aus einer vordefinierten Liste von Nachrichtenquellen."""
+        self.tabs = QTabWidget()
+        self.layout.addWidget(self.tabs)
+
+        news_sources = [
+            ("Bern Ost", "https://www.bern-ost.ch/",
+             ("span", "content-box-kicker", "h2", "content-box-title", "img", "img-fluid", "a", "content-box")),
+            ("Nau", "https://www.nau.ch/news",
+             ("span", "block", "span", "py-1", "img", "object-cover", "a", "text-black"))
+        ]
+
+        for name, url, selectors in news_sources:
+            tab = QWidget()
+            self.tabs.addTab(tab, name)
+            self.create_news_tab(tab, name, url, *selectors)
+
+    def create_header(self):
+        """Erstellt die Kopfzeile des Fensters."""
         header_label = QLabel("📰 Aktuelle News auf einen Blick")
         header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        header_label.setStyleSheet(style.MAIN_WINDOW_STYLE)
-        layout.addWidget(header_label)
-
-        self.tabs = QTabWidget()
-        self.bern_tab = QWidget()
-        self.nau_tab = QWidget()
-
-        self.tabs.addTab(self.bern_tab, "Bern Ost")
-        self.tabs.addTab(self.nau_tab, "Nau")
-        layout.addWidget(self.tabs)
-        self.setLayout(layout)
-
-        self.create_news_tab(self.bern_tab, "Bern Ost", "https://www.bern-ost.ch/", "span", "content-box-kicker", "h2",
-                             "content-box-title", "img", "img-fluid", "a", "content-box")
-        self.create_news_tab(self.nau_tab, "Nau", "https://www.nau.ch/news", "span", "block", "span", "py-1", "img",
-                             "object-cover", "a", "text-black")
+        header_label.setStyleSheet(style.HEADER_STYLE)
+        return header_label
 
     def create_news_tab(self, tab, name, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class,
                         link_tag, link_class):
@@ -66,10 +76,8 @@ class MyWindow(QWidget):
 
     def load_news(self, tab, url, kicker_tag, kicker_class, title_tag, title_class, img_tag, img_class, link_tag,
                   link_class):
-        for i in reversed(range(tab.grid_layout.count())):
-            widget = tab.grid_layout.itemAt(i).widget()
-            if widget:
-                widget.deleteLater()
+        """Lädt Nachrichten aus einer Quelle und aktualisiert das Layout."""
+        self.clear_grid_layout(tab.grid_layout)  # Neue Methode ersetzt die manuelle Löschung der Widgets
 
         news = scrapper.scrape_kicker_title_image(url, kicker_tag, kicker_class, title_tag, title_class, img_tag,
                                                   img_class, link_tag, link_class)
@@ -86,6 +94,13 @@ class MyWindow(QWidget):
                 article_url = item.get("link", None)
                 news_card = self.create_news_card(title, kicker, image_url, article_url)
                 tab.grid_layout.addWidget(news_card, index // 3, index % 3)
+
+    def clear_grid_layout(self, layout):
+        """Löscht alle Widgets aus einem QGridLayout."""
+        while layout.count():
+            widget = layout.takeAt(0).widget()
+            if widget:
+                widget.deleteLater()
 
     def create_news_card(self, title, kicker, image_url, article_url=None):
         card = QFrame()
