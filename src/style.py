@@ -20,21 +20,45 @@ HEADER_STYLE = """
 # Style für Buttons
 BUTTON_STYLE = """
     QPushButton {
-        background-color: #00a8e8;
+        background-color: #1e1e1e;
         color: white;
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 14px;
+        font-size: 10px;
         font-weight: bold;
+        border: none;
+        border-radius: 2px;
+        padding: 8px 16px;
         transition: background-color 0.3s;
     }
     QPushButton:hover {
-        background-color: #0088cc;
+        background-color: #004080;
     }
     QPushButton:pressed {
-        background-color: #0077aa;
+        background-color: #004080;
     }
 """
+
+EXPORT_BUTTON_STYLE = """
+    QPushButton {
+        background-color: #1e1e1e;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        border: none;
+        border-radius: 2px;
+        padding: 8px 16px;
+        margin-left: 11px;
+        width: 179px;
+        min-width: 150px;
+        max-width: 200px;  /* Verhindert volle Breite */
+    }
+    QPushButton:hover {
+        background-color: #004080;
+    }
+    QPushButton:pressed {
+        background-color: #004080;
+    }
+"""
+
 
 # Style für News-Karten
 CARD_STYLE = """
@@ -42,6 +66,24 @@ CARD_STYLE = """
     border-radius: 12px;
     padding: 6px;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+"""
+
+TAB_WIDGET_STYLE = """
+    QTabBar::tab {
+        background-color: #1e1e1e;
+        min-width: 80px;
+        min-height: 20px;
+        margin-left: 11px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 2px;
+        color: white;
+    }
+    
+    QTabBar::tab:hover {
+        background: #004080;
+    }
 """
 
 # Style für Bilder in News-Karten
