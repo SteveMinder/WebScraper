@@ -3,7 +3,12 @@ import datetime
 import urllib.parse
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
+"""
+Der Export wurde in eine separate Datei ausgelagert.
+Zu einem späteren Zeitpunkt wird er voraussichtlich an eine Datenbank angebunden
+(vorgesehen für das 3. Semester im NDS an der TEKO Bern :)) ).
 
+"""
 def get_save_path(parent):
     """Öffnet einen Speicherdialog und schlägt einen Dateinamen mit Zeitstempel vor."""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
