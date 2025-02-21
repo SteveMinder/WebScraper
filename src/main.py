@@ -10,6 +10,7 @@ from io import BytesIO
 import urllib.parse
 import style
 import ui_setup
+import api_scraper
 
 class MyWindow(QWidget):
     # Initialisierung
@@ -48,6 +49,34 @@ class MyWindow(QWidget):
         # Grid-Layout speichern und sofort laden
         tab.grid_layout = grid_layout
         self.refresh_news(tab, url, selectors)
+
+    def create_api_news_tab(self, tab):
+        """Erstellt einen neuen Tab für die TechCrunch API News."""
+        layout = QVBoxLayout(tab)
+        update_button = QPushButton("TechCrunch News aktualisieren")
+        update_button.setStyleSheet(style.BUTTON_STYLE)
+
+        # Beim Klick wird `refresh_api_news` aufgerufen
+        update_button.clicked.connect(lambda: self.refresh_api_news(tab))
+        layout.addWidget(update_button)
+
+        # Scrollbare Nachrichtenliste
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        news_container = QWidget()
+        grid_layout = QGridLayout(news_container)
+        grid_layout.setSpacing(8)
+        scroll_area.setWidget(news_container)
+        layout.addWidget(scroll_area)
+
+        # Grid-Layout speichern und sofort laden
+        tab.grid_layout = grid_layout
+        self.refresh_api_news(tab)
+
+    def fetch_api_news(self):
+        """Holt die TechCrunch-News von der API."""
+        API_KEY = "39016f1e98d14db08f899e80cffa0197"
+        return api_scraper.scrape_techcrunch_api(API_KEY) or []
 
     def fetch_news(self, url, selectors):
         """Holt Nachrichten von der angegebenen Quelle und gibt eine Liste zurück."""
@@ -91,6 +120,11 @@ class MyWindow(QWidget):
                     item.get("link", None)
                 )
                 tab.grid_layout.addWidget(news_card, index // 3, index % 3)
+
+    def refresh_api_news(self, tab):
+        """Aktualisiert die TechCrunch API News."""
+        news = self.fetch_api_news()  # Holt die API-News
+        self.display_news(tab, "https://techcrunch.com", news)  # Zeigt sie an
 
     def refresh_news(self, tab, url, selectors):
         """Aktualisiert die Nachrichtenanzeige in der Tab."""

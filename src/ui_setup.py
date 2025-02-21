@@ -17,7 +17,7 @@ def setup_layout(self):
     # Export-Button erstellen & Styling setzen
     self.export_button = QPushButton("News exportieren")
     self.export_button.setStyleSheet(style.EXPORT_BUTTON_STYLE)
-    self.export_button.clicked.connect(lambda: exporter.export_news(self, self.news_sources, self.fetch_news, self.tabs))
+    self.export_button.clicked.connect(lambda: exporter.export_news(self, self.news_sources, self.fetch_news, self.fetch_api_news, self.tabs))
     self.layout.addWidget(self.export_button)  # Fügt den Button ins Layout ein
 
 def setup_tabs(self):
@@ -59,3 +59,8 @@ def setup_tabs(self):
         tab = QWidget()
         self.tabs.addTab(tab, name)
         self.create_news_tab(tab, name, data["url"], data["selectors"])
+
+    # 🚀 Neuer Tab für TechCrunch API News
+    techcrunch_tab = QWidget()
+    self.tabs.addTab(techcrunch_tab, "TechCrunch [API]")
+    self.create_api_news_tab(techcrunch_tab)
