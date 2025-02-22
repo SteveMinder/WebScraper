@@ -46,7 +46,3 @@ def scrape_techcrunch_api(api_key):
     except Exception as e:
         print(f"[ERROR] Allgemeiner Fehler: {e}")
         return [{"error": "Allgemeiner Fehler"}]
-
-# Beispielaufruf mit API-Schlüssel
-API_KEY = "DEIN_NEWSAPI_KEY"
-news = scrape_techcrunch_api(API_KEY)
