@@ -34,7 +34,7 @@ def write_news_to_csv(file_path, news_sources, fetch_news, fetch_api_news, tabs)
 
             if hasattr(tab, "grid_layout"):
                 # **Unterscheiden, ob es sich um TechCrunch API oder Web-Scraping handelt**
-                if tab_name == "TechCrunch API":
+                if tab_name == "TechCrunch [API]":
                     print("[DEBUG] API News werden exportiert...")
                     news = fetch_api_news()
                     source_url = "https://techcrunch.com"
