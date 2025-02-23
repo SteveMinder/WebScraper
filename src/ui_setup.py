@@ -3,29 +3,65 @@ import style
 import exporter
 
 
+# ============================
+# 🏠 FENSTER-KONFIGURATION
+# ============================
+
 def setup_window(self):
-    """Setzt grundlegende Eigenschaften des Fensters."""
-    self.setWindowTitle("News Scraper Steve Minder")
-    self.resize(1000, 700)
-    self.setStyleSheet(style.MAIN_WINDOW_STYLE)
+    """
+    Setzt die grundlegenden Eigenschaften des Hauptfensters.
+
+    - Setzt den Fenstertitel.
+    - Definiert die Fenstergröße.
+    - Wendet den Style aus `style.py` an.
+    """
+    self.setWindowTitle("News Scraper Steve Minder")  # 🏷️ Titel des Fensters
+    self.resize(1000, 700)  # 📏 Fenstergröße (Breite x Höhe)
+    self.setStyleSheet(style.MAIN_WINDOW_STYLE)  # 🎨 Stil setzen
+
+
+# ============================
+# 📌 LAYOUT-EINRICHTUNG
+# ============================
 
 def setup_layout(self):
-    """Initialisiert das Hauptlayout."""
-    self.layout = QVBoxLayout(self)
-    self.layout.addWidget(self.create_header())
+    """
+    Erstellt das Hauptlayout des Fensters.
 
-    # Export-Button erstellen & Styling setzen
+    - Fügt den Header hinzu.
+    - Erstellt den Export-Button mit Styling und Funktion.
+    """
+    self.layout = QVBoxLayout(self)  # 📐 Hauptlayout (vertikal)
+    self.layout.addWidget(self.create_header())  # 📰 Überschrift hinzufügen
+
+    # 📤 Export-Button für das Speichern von Nachrichten
     self.export_button = QPushButton("News exportieren")
-    self.export_button.setStyleSheet(style.EXPORT_BUTTON_STYLE)
-    self.export_button.clicked.connect(lambda: exporter.export_news(self, self.news_sources, self.fetch_news, self.fetch_api_news, self.tabs))
-    self.layout.addWidget(self.export_button)  # Fügt den Button ins Layout ein
+    self.export_button.setStyleSheet(style.EXPORT_BUTTON_STYLE)  # Stil setzen
+    self.export_button.clicked.connect(
+        lambda: exporter.export_news(
+            self, self.news_sources, self.fetch_news, self.fetch_api_news, self.tabs
+        )
+    )
+
+    self.layout.addWidget(self.export_button)  # 🎯 Button ins Layout einfügen
+
+
+# ============================
+# 📰 TAB-VERWALTUNG (NEWS-QUELLEN)
+# ============================
 
 def setup_tabs(self):
-    """Erstellt die Tabs für Nachrichtenquellen."""
-    self.tabs = QTabWidget()
-    self.layout.addWidget(self.tabs)
-    self.tabs.setStyleSheet(style.TAB_WIDGET_STYLE)  # Wende das Styling an
+    """
+    Erstellt und verwaltet die Tabs für verschiedene Nachrichtenquellen.
 
+    - Erstellt Tabs für definierte Nachrichtenquellen (Bern Ost, Nau).
+    - Erstellt einen separaten Tab für die TechCrunch API.
+    """
+    self.tabs = QTabWidget()  # 📑 Tab-Widget initialisieren
+    self.layout.addWidget(self.tabs)  # 🔗 Tabs ins Layout einfügen
+    self.tabs.setStyleSheet(style.TAB_WIDGET_STYLE)  # 🎨 Styling anwenden
+
+    # 📡 Definierte Nachrichtenquellen mit passenden Selektoren
     self.news_sources = {
         "Bern Ost": {
             "url": "https://www.bern-ost.ch/",
@@ -55,12 +91,13 @@ def setup_tabs(self):
         }
     }
 
+    # 🔄 Erstelle für jede Nachrichtenquelle einen eigenen Tab
     for name, data in self.news_sources.items():
         tab = QWidget()
-        self.tabs.addTab(tab, name)
+        self.tabs.addTab(tab, name)  # 📑 Tab hinzufügen
         self.create_news_tab(tab, name, data["url"], data["selectors"])
 
     # 🚀 Neuer Tab für TechCrunch API News
     techcrunch_tab = QWidget()
-    self.tabs.addTab(techcrunch_tab, "TechCrunch [API]")
+    self.tabs.addTab(techcrunch_tab, "TechCrunch [API]")  # 📡 API-Tab hinzufügen
     self.create_api_news_tab(techcrunch_tab)

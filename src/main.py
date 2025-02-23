@@ -11,27 +11,37 @@ import urllib.parse
 import style
 import ui_setup
 import api_scraper
-from search import filter_news_by_query  # 🔍 Importiere die Suchfunktion
+from search import filter_news_by_query  # 🔍 Importiere die Suchfunktion zur Filterung von News
 
 
 class MyWindow(QWidget):
-    # Initialisierung
+    """Hauptfenster der Anwendung für den News-Scraper."""
+
     def __init__(self):
+        """Initialisiert das Hauptfenster und setzt das Layout sowie die Tabs."""
         super().__init__()
-        self.news_cache = {}  # 🗂 Speichert die News für eine schnellere Suche
-        ui_setup.setup_window(self)
-        ui_setup.setup_layout(self)
-        ui_setup.setup_tabs(self)
+        self.news_cache = {}  # 🗂 Speichert bereits geladene News für eine schnellere Suche
+        ui_setup.setup_window(self)  # Fenster-Einstellungen
+        ui_setup.setup_layout(self)  # Layout initialisieren
+        ui_setup.setup_tabs(self)  # Tabs hinzufügen
 
     def create_header(self):
-        """Erstellt die Kopfzeile des Fensters."""
+        """Erstellt die Kopfzeile des Fensters mit einem Titel."""
         header_label = QLabel("📰 Aktuelle News auf einen Blick")
         header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         header_label.setStyleSheet(style.HEADER_STYLE)
         return header_label
 
     def create_news_tab(self, tab, name, url, selectors):
-        """Erstellt eine Nachrichten-Tab mit einer Suchfunktion."""
+        """
+        Erstellt einen Nachrichten-Tab mit Aktualisierungs- und Suchfunktion.
+
+        Args:
+            tab (QWidget): Das Tab-Widget für eine bestimmte Quelle.
+            name (str): Name der Nachrichtenquelle.
+            url (str): URL der Webseite für Web-Scraping.
+            selectors (dict): HTML-Selektoren zum Scrapen der News.
+        """
         layout = QVBoxLayout(tab)
 
         # 🔄 Aktualisieren-Button
@@ -64,13 +74,13 @@ class MyWindow(QWidget):
         """Erstellt einen neuen Tab für die TechCrunch API News."""
         layout = QVBoxLayout(tab)
 
-        # 🔄 Aktualisieren-Button
+        # 🔄 Aktualisieren-Button für API-News
         update_button = QPushButton("TechCrunch News aktualisieren")
         update_button.setStyleSheet(style.BUTTON_STYLE)
         update_button.clicked.connect(lambda: self.refresh_api_news(tab))
         layout.addWidget(update_button)
 
-        # 🔍 Suchfeld
+        # 🔍 Suchfeld für API-News
         search_bar = QLineEdit()
         search_bar.setPlaceholderText("🔍 Suchbegriff eingeben...")
         search_button = QPushButton("Suchen")
@@ -79,7 +89,7 @@ class MyWindow(QWidget):
         layout.addWidget(search_bar)
         layout.addWidget(search_button)
 
-        # 📰 Scrollbare Nachrichtenliste
+        # 📰 Scrollbare Nachrichtenliste für API-News
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         news_container = QWidget()
@@ -91,7 +101,14 @@ class MyWindow(QWidget):
         self.refresh_api_news(tab)  # Erstes Laden der API-News
 
     def search_news(self, tab, name, query):
-        """Filtert die bereits geladenen Nachrichten nach einem Suchbegriff."""
+        """
+        Filtert bereits geladene Nachrichten nach einem Suchbegriff.
+
+        Args:
+            tab (QWidget): Das Tab-Widget mit den Nachrichten.
+            name (str): Name der Nachrichtenquelle.
+            query (str): Suchbegriff zur Filterung.
+        """
         if name == "TechCrunch API":
             news = self.fetch_api_news()
         else:
@@ -107,11 +124,10 @@ class MyWindow(QWidget):
         return api_scraper.scrape_techcrunch_api(API_KEY) or []
 
     def fetch_news(self, url, selectors):
-        """Holt Nachrichten von der angegebenen Quelle und gibt eine Liste zurück."""
+        """Holt Nachrichten von einer Webseite und gibt eine Liste zurück."""
         try:
             return scrapper.scrape_kicker_title_image(
-                url,
-                selectors["kicker_tag"], selectors["kicker_class"],
+                url, selectors["kicker_tag"], selectors["kicker_class"],
                 selectors["title_tag"], selectors["title_class"],
                 selectors["img_tag"], selectors["img_class"],
                 selectors["link_tag"], selectors["link_class"]
@@ -162,7 +178,7 @@ class MyWindow(QWidget):
     def load_image(self, url):
         """Lädt ein Bild von einer URL und gibt es als QPixmap zurück."""
         if not url or url == "Kein Bild":
-            return None  # ⛔ Falls kein Bild vorhanden ist, gib einfach `None` zurück
+            return None  # ⛔ Falls kein Bild vorhanden ist, gib `None` zurück
 
         pixmap = QPixmap()
         try:
@@ -174,6 +190,7 @@ class MyWindow(QWidget):
         except requests.RequestException:
             pass
         return None  # Falls das Bild nicht geladen werden konnte
+
     def create_news_card(self, title, kicker, image_url, article_url=None):
         """Erstellt eine News-Karte mit Titel, Bild und Link."""
         card = QFrame()
