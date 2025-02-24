@@ -1,18 +1,17 @@
 import sys
-import csv
+
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton, QFrame, QGridLayout, \
-    QTabWidget, QFileDialog, QMessageBox, QLineEdit
+    QLineEdit
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
+from io import BytesIO
+
 import scrapper
 import requests
-from io import BytesIO
-import urllib.parse
 import style
 import ui_setup
 import api_scraper
 from search import filter_news_by_query  # 🔍 Importiere die Suchfunktion zur Filterung von News
-
 
 class MyWindow(QWidget):
     """Hauptfenster der Anwendung für den News-Scraper."""
@@ -227,7 +226,6 @@ class MyWindow(QWidget):
 
         card.setLayout(card_layout)
         return card
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
