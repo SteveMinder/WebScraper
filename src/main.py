@@ -1,16 +1,16 @@
 import sys
-import csv
+
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton, QFrame, QGridLayout, \
     QTabWidget, QFileDialog, QMessageBox, QLineEdit
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
-import scrapper
 import requests
 from io import BytesIO
-import urllib.parse
+
 import style
 import ui_setup
 import api_scraper
+import scrapper
 from search import filter_news_by_query  # 🔍 Importiere die Suchfunktion zur Filterung von News
 
 
