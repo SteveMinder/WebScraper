@@ -2,7 +2,6 @@ from PyQt6.QtWidgets import QVBoxLayout, QTabWidget, QWidget, QPushButton
 import style
 import exporter
 
-
 # ============================
 # 🏠 FENSTER-KONFIGURATION
 # ============================
