@@ -13,7 +13,7 @@ MAIN_WINDOW_STYLE = """
 
 # 📌 Stil für den Überschrift-Label (Header)
 HEADER_STYLE = """
-    font-size: 22px;          /* Größere Schrift für den Titel */
+    font-size: 22px;          /* Grössere Schrift für den Titel */
     font-weight: bold;        /* Fettgedruckt für mehr Sichtbarkeit */
     color: #00a8e8;          /* Blaue Farbe für visuelle Hervorhebung */
     padding: 5px;            /* Leichte Polsterung für bessere Lesbarkeit */
@@ -23,8 +23,8 @@ HEADER_STYLE = """
 BUTTON_STYLE = """
     QPushButton {
         background-color: #1e1e1e;  /* Dunkler Button-Hintergrund */
-        color: white;               /* Weiße Schriftfarbe */
-        font-size: 10px;            /* Kleinere Schriftgröße */
+        color: white;               /* Weisse Schriftfarbe */
+        font-size: 10px;            /* Kleinere Schriftgrösse */
         font-weight: bold;          /* Fett für bessere Lesbarkeit */
         border: none;               /* Kein Rand für ein modernes Design */
         border-radius: 2px;         /* Leicht abgerundete Ecken */
@@ -43,7 +43,7 @@ BUTTON_STYLE = """
 EXPORT_BUTTON_STYLE = """
     QPushButton {
         background-color: #1e1e1e;  /* Dunkler Hintergrund */
-        color: white;               /* Weiße Schrift */
+        color: white;               /* Weisse Schrift */
         font-size: 10px;            /* Kleinere Schrift */
         font-weight: bold;
         border: none;
@@ -52,7 +52,7 @@ EXPORT_BUTTON_STYLE = """
         margin-left: 11px;          /* Leichter Abstand nach links */
         width: 179px;               /* Feste Breite */
         min-width: 150px;           /* Mindestbreite */
-        max-width: 200px;           /* Maximale Breite, um zu große Buttons zu vermeiden */
+        max-width: 200px;           /* Maximale Breite, um zu grosse Buttons zu vermeiden */
     }
     QPushButton:hover {
         background-color: #004080;  /* Farbänderung beim Hover */
@@ -78,10 +78,10 @@ TAB_WIDGET_STYLE = """
         min-height: 20px;           /* Mindesthöhe für Tabs */
         margin-left: 11px;          /* Abstand zwischen den Tabs */
         padding: 5px 10px;          /* Innenabstand für bessere Klickbarkeit */
-        font-size: 10px;            /* Kleinere Schriftgröße */
+        font-size: 10px;            /* Kleinere Schriftgrösse */
         font-weight: bold;
         border-radius: 2px;
-        color: white;               /* Weiße Schrift */
+        color: white;               /* Weisse Schrift */
     }
 
     QTabBar::tab:hover {

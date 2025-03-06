@@ -19,7 +19,7 @@ def filter_news_by_query(news, search_query):
     search_query = search_query.lower()  # Umwandlung in Kleinbuchstaben für case-insensitive Suche
 
     for article in news:
-        # Titel und Kicker in Kleinbuchstaben umwandeln, um eine Groß-/Kleinschreibung-unabhängige Suche zu ermöglichen
+        # Titel und Kicker in Kleinbuchstaben umwandeln, um eine Gross-/Kleinschreibung-unabhängige Suche zu ermöglichen
         title = article.get("title", "").lower()
         kicker = article.get("kicker", "").lower()
 

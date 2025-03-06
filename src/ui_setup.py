@@ -13,11 +13,11 @@ def setup_window(self):
     Setzt die grundlegenden Eigenschaften des Hauptfensters.
 
     - Setzt den Fenstertitel.
-    - Definiert die Fenstergröße.
+    - Definiert die Fenstergrösse.
     - Wendet den Style aus `style.py` an.
     """
     self.setWindowTitle("News Scraper Steve Minder")  # 🏷️ Titel des Fensters
-    self.resize(1000, 700)  # 📏 Fenstergröße (Breite x Höhe)
+    self.resize(1000, 700)  # 📏 Fenstergrösse (Breite x Höhe)
     self.setStyleSheet(style.MAIN_WINDOW_STYLE)  # 🎨 Stil setzen
 
 

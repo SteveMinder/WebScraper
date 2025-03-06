@@ -117,7 +117,7 @@ def export_news(parent, news_sources, fetch_news, fetch_api_news, tabs):
             parent,
             "Fehler beim Export",
             "Die Datei ist bereits geöffnet und kann nicht überschrieben werden.\n"
-            "Bitte schließen Sie die Datei und versuchen Sie es erneut."
+            "Bitte schliessen Sie die Datei und versuchen Sie es erneut."
         )
     except Exception as e:
         QMessageBox.critical(
