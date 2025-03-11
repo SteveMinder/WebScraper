@@ -16,7 +16,7 @@ def scrape_techcrunch_api(api_key, search_query=None):
         list: Eine Liste von Dictionaries mit den extrahierten Nachrichteninformationen.
               Falls ein Fehler auftritt, wird eine Liste mit einer Fehlernachricht zurückgegeben.
     """
-    url = "https://newsapi.org/v2/top-headlines"  # 📡 API-Endpunkt
+    url = "https://newsapi.org/v2/everything"  # 📡 API-Endpunkt
     params = {
         "sources": "techcrunch",
         "apiKey": api_key
