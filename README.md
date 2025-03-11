@@ -2,7 +2,7 @@
 
 **Modularbeit OOP 2. Semester TEKO Bern B-NIA-24-A-a**
 
-## Ziele
+## Zieldefinition
 
 - Entwicklung einer Softwareapplikation mit GUI
 - Sammlung von Nachrichten (News) einer Webseite durch HTML-Scraping
