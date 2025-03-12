@@ -24,8 +24,8 @@ def scrape_techcrunch_api(api_key, search_query=None):
 
     try:
         # 🌐 HTTP-Anfrage an die API senden
-        response = requests.get(url, params=params)
-        response.raise_for_status()  # Falls die Anfrage fehlschlägt (z. B. 401, 404, 500), wird eine Exception ausgelöst
+        response = requests.get(url, params=params) # get Anfrage mit url + parameter
+        response.raise_for_status()  # Falls die Anfrage fehlschlägt
 
         # 📊 JSON-Daten aus der API-Antwort extrahieren
         news_data = response.json()
