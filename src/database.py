@@ -29,7 +29,7 @@ def init_db(db_name="news.db"):
     ''')
 
     conn.commit()   # 💾 Änderungen dauerhaft speichern
-    conn.close()    # 🔒 Verbindung zur Datenbank schließen
+    conn.close()    # 🔒 Verbindung zur Datenbank schliessen
 
 
 # =============================================
