@@ -2,7 +2,8 @@ import sys
 
 from PyQt6.QtWidgets import QVBoxLayout, QTabWidget, QWidget, QPushButton
 import style
-import exporter
+import exporter # alter exporter (CSV)
+from db_exporter import export_news_to_db # neuer exporter in db
 
 # ============================
 # 🏠 FENSTER-KONFIGURATION
@@ -34,7 +35,7 @@ def setup_layout(self):
     """
     self.layout = QVBoxLayout(self)  # 📐 Hauptlayout (vertikal)
     self.layout.addWidget(self.create_header())  # 📰 Überschrift hinzufügen
-
+    """
     # 📤 Export-Button für das Speichern von Nachrichten
     self.export_button = QPushButton("News exportieren")
     self.export_button.setStyleSheet(style.EXPORT_BUTTON_STYLE)  # Stil setzen
@@ -45,7 +46,14 @@ def setup_layout(self):
     )
 
     self.layout.addWidget(self.export_button)  # 🎯 Button ins Layout einfügen
+    """
 
+    self.export_button_db = QPushButton("In Datenbank exportieren")
+    self.export_button_db.setStyleSheet(style.EXPORT_BUTTON_STYLE)
+    self.export_button_db.clicked.connect(
+        lambda: export_news_to_db(self.news_sources, self.fetch_news, self.fetch_api_news, self.tabs)
+    )
+    self.layout.addWidget(self.export_button_db)
 
 # ============================
 # 📰 TAB-VERWALTUNG (NEWS-QUELLEN)

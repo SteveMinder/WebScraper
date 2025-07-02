@@ -3,6 +3,12 @@ import datetime
 import urllib.parse
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
+# ===============================================================
+# 🛑 HINWEIS: Dieses Modul (CSV-Export) ist aktuell deaktiviert.
+# Es wurde durch `db_exporter.py` ersetzt.
+# Die Funktionen bleiben erhalten, falls später CSV-Export gewünscht ist.
+# ===============================================================
+
 """
 📌 Modul für den Export von News-Daten als CSV-Datei.
 
