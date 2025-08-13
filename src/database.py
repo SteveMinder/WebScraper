@@ -22,7 +22,7 @@ def init_db(db_name="news.db"):
             kicker TEXT,                            -- 📌 Untertitel oder Kategorie
             image TEXT,                             -- 🖼️ Bild-URL
             link TEXT,                              -- 🔗 Artikel-Link
-            source TEXT,                            -- 🌐 Nachrichtenquelle (z. B. "Nau", "TechCrunch")
+            source TEXT,                            -- 🌐 Nachrichtenquelle (z.B. "Nau", "TechCrunch")
             timestamp TEXT,                         -- 🕒 Zeitstempel des Eintrags
             UNIQUE(title, link)                     -- 🔁 Kombination aus Titel & Link muss eindeutig sein
         )
@@ -44,7 +44,6 @@ def insert_news(news_items, source, timestamp, db_name="news.db"):
         source (str): Name der Nachrichtenquelle.
         timestamp (str): Zeitstempel des Exports.
         db_name (str): Datenbankdatei. Standard: "news.db"
-
     Returns:
         int: Anzahl der neu eingefügten Artikel (Duplikate werden ignoriert).
     """
